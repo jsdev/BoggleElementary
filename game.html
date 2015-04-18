@@ -11,8 +11,8 @@
     <script src="./js/prefixfree.min.js"></script>
 </head>
 <body>
+<h1>Boggle Elementary</h1>
 <section>
-<h1>Hack A Mania.</h1>
 <div id="output-container">
     <div id="output">
     </div>
@@ -21,8 +21,10 @@
 <div id='game-board'></div>
     <button id="start">New Game</button>
     <button id='clear-all'>Submit</button>
-</section>
-<section>
+    <button id="quit" class="hide">End Game</button>
+
+</section><section class="configuration">
+    <h2>Options</h2><button class="close-view" title="Exit Options">X</button>
     <label for="totalTime">Timer:</label>
     <select name="totalTime" id="totalTime">
         <option value="30">30 seconds</option>

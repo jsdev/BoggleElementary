@@ -39,6 +39,8 @@ var dice = new Array(
 
 var output = document.getElementById('output');
 var gameBoard = document.getElementById('game-board');
+var start = document.getElementById('start');
+var quit = document.getElementById('quit');
 var tiles;
 
 var clearAll = document.getElementById('clear-all');
@@ -64,16 +66,20 @@ var makeTable = function () {
 	}
 	gameBoard.innerHTML = s;
 	tiles = gameBoard.querySelectorAll('button');
+	indexTiles();
 };
 
 var updateTable = function () {
-	for(var i=0; i<dimension; i++) {
-		for(var j=0; j<dimension; j++) {
-			var c = board[i+j*dimension].toUpperCase();
-			if(c=='Q') c = 'Qu';
-			document.getElementById(i+'_'+j).innerHTML = c;
+	var s = '';
+	for(var i = 0; i < dimension; i++) {
+		for(var j = 0, c; j < dimension; j++) {
+			c = board[i+j * dimension].toUpperCase();
+			if(c === 'Q') c = 'Qu';
+			s += '<button class="letter" id="'+i+'_'+j+'">'+c+'</button>';
 		}
 	}
+	gameBoard.innerHTML = s;
+	tiles = gameBoard.querySelectorAll('button');
 	indexTiles();
 };
 
@@ -100,8 +106,7 @@ var diceRoll = function () {
 		return;
 	}
 	var remaining = new Array();
-	for(var i=0, j, k; i < dimensionSquared; i++)
-	{
+	for(var i=0, j, k; i < dimensionSquared; i++) {
 		j = Math.floor(Math.random()*dice.length);
 		var die = dice[j];
 		j = Math.floor(Math.random()*6);
@@ -112,9 +117,18 @@ var diceRoll = function () {
 
 
 var newGame = function () {
+	console.log('started new game');
+	start.classList.add('hide');
+	quit.classList.remove('hide');
 	diceRoll();
-	makeTable();
 	updateTable();
+};
+
+var endGame = function () {
+	console.log('quit game');
+	start.classList.remove('hide');
+	quit.classList.add('hide');
+	makeTable();
 };
 
 var clearActiveTiles = function() {
@@ -184,7 +198,8 @@ makeTable();
 
 
 document.getElementById('dimensions').addEventListener('change', setBoardDimensions);
-document.getElementById('start').addEventListener('click', newGame);
+start.addEventListener('click', newGame);
+quit.addEventListener('click', endGame);
 
 gameBoard.addEventListener('click', clicker);
 clearAll.addEventListener('click', submitWord);

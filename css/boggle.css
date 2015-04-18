@@ -6,9 +6,11 @@ section {
     width: 8.8em;
     display: inline-block;
     box-sizing: border-box;
+    vertical-align: top;
+    position: relative;
 }
 
-button:enabled {
+.letter:enabled {
     background: linear-gradient(to bottom right, greenyellow, rgba(255,255,255,0));
 }
 
@@ -33,7 +35,6 @@ button:enabled {
 
 #output,
 .letter{
-    cursor: pointer;
     display: inline-block;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 30px;
@@ -60,3 +61,40 @@ button:enabled {
 .active {
     background: linear-gradient(to bottom right, gold, rgba(255,255,255,0));
 }
+
+button {
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.configuration {
+
+}
+
+.configuration label,
+.configuration input {
+    font-size: .5em;
+}
+
+.configuration h2 {
+    margin: 0;
+    padding-right: .5em;
+    box-sizing: border-box;
+}
+
+.close-view {
+    box-sizing: border-box;
+    margin: 0;
+    padding: .2em .5em;
+    border: solid 2px black;
+    position: absolute;
+    top: .25em;
+    right: .25em;
+    font-size: .75em;
+    background: transparent;
+}
+
+h1 { display: none;}
