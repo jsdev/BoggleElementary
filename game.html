@@ -13,28 +13,18 @@
 <body>
 <h1>Boggle Elementary</h1>
 <section>
-<div id="output-container">
-    <div id="output">
+    <div id="output-container">
+        <div id="output">
+        </div>
     </div>
-</div>
-<hr />
-<div id='game-board'></div>
+    <hr />
+    <div id='game-board'></div>
     <button id="start">New Game</button>
-    <button id='clear-all'>Submit</button>
+    <button id='options'>Options</button>
+    <button id='submit-word' class="hide">Submit Word</button>
     <button id="quit" class="hide">End Game</button>
-
-</section><section class="configuration">
+</section><section id="configuration" class="hide">
     <h2>Options</h2><button class="close-view" title="Exit Options">X</button>
-    <label for="totalTime">Timer:</label>
-    <select name="totalTime" id="totalTime">
-        <option value="30">30 seconds</option>
-        <option value="60" selected>1 minute</option>
-        <option value="90">90 seconds</option>
-        <option value="120">Two minutes</option>
-        <option value="180">Three minutes</option>
-        <option value="240">Four minutes</option>
-        <option value="300">Five minutes</option>
-    </select>
     <label for="dimensions">Size:</label>
     <select name="dimensions" id="dimensions">
         <option value="3">3</option>
@@ -46,6 +36,28 @@
         <option value="9">9</option>
         <option value="10">10</option>
     </select>
+    <hr />
+    <label for="totalTime">Timer:</label>
+    <select name="totalTime" id="totalTime">
+        <option value="30">30 seconds</option>
+        <option value="60" selected>1 minute</option>
+        <option value="90">90 seconds</option>
+        <option value="120">Two minutes</option>
+        <option value="180">Three minutes</option>
+        <option value="240">Four minutes</option>
+        <option value="300">Five minutes</option>
+    </select>
+    <hr />
+    <label for="minimum-word-length">Minimum length:</label>
+    <select name="minimum-word-length" id="minimum-word-length">
+        <option value="3">3</option>
+        <option value="4" selected>4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+    </select>
+</section><section class="solutions hide">
+    <h2>Answers</h2><button class="close-view" title="Exit Answers">X</button>
+    <table id="solution"></table>
 </section>
 <script src="./js/dictionary.js"></script>
 <script src="./js/seedrandom.js"></script>

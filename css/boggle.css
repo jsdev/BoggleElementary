@@ -70,16 +70,12 @@ button {
     display: none;
 }
 
-.configuration {
-
-}
-
-.configuration label,
-.configuration input {
+#configuration label,
+#configuration input {
     font-size: .5em;
 }
 
-.configuration h2 {
+h2 {
     margin: 0;
     padding-right: .5em;
     box-sizing: border-box;
@@ -98,3 +94,14 @@ button {
 }
 
 h1 { display: none;}
+
+.get-definition {
+    color: black;
+    font-size:.75em;
+    text-decoration: none;
+}
+
+.solution {
+    text-align: right;
+    width: 100%;
+}
