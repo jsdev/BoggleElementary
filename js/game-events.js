@@ -52,6 +52,20 @@ var enableSurroundingTiles = function (tile) {
 	validateTile(index + 1, 'right');
 	validateTile(up + 1, 'right');
 	validateTile(down + 1, 'right');
+
+};
+
+var submitWord = function () {
+	myWordList.push(output.innerHTML);
+	output.innerHTML = '';
+	clearActiveTiles();
+	console.log(myWordList);
+};
+
+var autoSubmitWord = function () {
+	if (output.innerHTML.length && !gameBoard.querySelectorAll('button:not([disabled])').length) {
+		submitWord();
+	}
 };
 
 var clicker = function(e) {
@@ -63,14 +77,10 @@ var clicker = function(e) {
 	tile.classList.add('active');
 	disableTiles();
 	enableSurroundingTiles(tile);
+	autoSubmitWord();
 };
 
-var submitWord = function () {
-	myWordList.push(output.innerHTML);
-	output.innerHTML = '';
-	clearActiveTiles();
-	console.log(myWordList);
-};
+
 
 gameBoard.addEventListener('click', clicker);
 
