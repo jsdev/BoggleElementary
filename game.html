@@ -12,17 +12,18 @@
 </head>
 <body>
 <h1>Boggle Elementary</h1>
+<div id="game-container">
 <section>
     <div id="output-container">
-        <div id="output">
-        </div>
+        <div id="output" class="pretty-button"></div>
     </div>
     <hr />
     <div id='game-board'></div>
-    <button id="start">New Game</button>
-    <button id='options'>Options</button>
-    <button id='submit-word' class="hide">Submit Word</button>
-    <button id="quit" class="hide">End Game</button>
+    <hr />
+    <button id="start" class="pretty-button">Start</button>
+    <button id='options' class="pretty-button">Options</button>
+    <button id='submit-word' style="display: none;" class="hide pretty-button">Submit Word</button>
+    <button id="quit" class="hide pretty-button">End Game</button>
 </section><section id="configuration" class="hide">
     <h2>Options</h2><button class="close-view" title="Exit Options">X</button>
     <label for="dimensions">Size:</label>
@@ -55,10 +56,21 @@
         <option value="5">5</option>
         <option value="6">6</option>
     </select>
+    <hr />
+    <label for="maximum-word-length">Maximum length:</label>
+    <select name="maximum-word-length" id="maximum-word-length">
+        <option value="0">No Limit</option>
+        <option value="9">9</option>
+        <option value="7">7</option>
+        <option value="5">5</option>
+        <option value="4" selected>4</option>
+    </select>
 </section><section class="solutions hide">
     <h2>Answers</h2><button class="close-view" title="Exit Answers">X</button>
     <table id="solution"></table>
 </section>
+</div>
+
 <script src="./js/dictionary.js"></script>
 <script src="./js/seedrandom.js"></script>
 <script src="./js/game-events.js"></script>

@@ -8,7 +8,7 @@ var totalTime = 10*1000;
 var timeRemaining = 0;
 var updateFrequency = 50;
 var timervar = null;
-var solutionColumnsNumber = 2;
+var solutionColumnsNumber = 4;
 
 var dice = new Array(
 	"yqyswf",
@@ -46,9 +46,13 @@ var optionsButton = document.getElementById('options');
 var quitButton = document.getElementById('quit');
 var solution = document.getElementById('solution');
 var minimumWordLength = document.getElementById('minimum-word-length');
+var maximumWordLength = document.getElementById('maximum-word-length');
 var tiles;
 
 var submitWordButton = document.getElementById('submit-word');
+
+//set height
+document.getElementById('game-container').style.height = window.innerHeight + "px";
 
 var indexTiles = function () {
 	for (var i=0; i < tiles.length; i++ ) {
@@ -165,8 +169,10 @@ var submitWord = function () {
 };
 
 var autoSubmitWord = function () {
-	if (output.innerHTML.length && !gameBoard.querySelectorAll('button:not([disabled])').length) {
+	/* simplifying game branding it 4 letter word */
+	if (output.innerHTML.length == 4 || (output.innerHTML.length && !gameBoard.querySelectorAll('button:not([disabled])').length)) {
 		submitWord();
+		return;
 	}
 };
 
@@ -238,8 +244,8 @@ var showSolution = function () {
 	solve();
 	var col = 0;
 	var s = '';
-	for(var wl=25; wl>=3; wl--) {
-		var numsolsatthiswl = 0;
+	var max = maximumWordLength ? maximumWordLength.value : dimensionSquared;
+	for(var wl= max; wl>=3; wl--) {
 		for(var i=0; i<solutions.length; i++) {
 			if(solutions[i].length==wl) {
 				var w = transformWord(solutions[i]);
@@ -247,7 +253,6 @@ var showSolution = function () {
 				col = (col+1)%solutionColumnsNumber;
 				s += '<td><a class="get-definition" target="_blank" href="http://www.lexic.us/definition-of/' + w + '">' + w + '</a></td>';
 				if (col=== 0)  s += '</tr>\n';
-				numsolsatthiswl += 1;
 			}
 		}
 	}
@@ -262,21 +267,22 @@ var closeSection = function (e) {
 }
 
 var newGame = function () {
-	console.log('started new game');
-	startButton.classList.add('hide');
-	optionsButton.classList.add('hide');
-	quitButton.classList.remove('hide');
+	console.log('started new game w/ toggle');
+	startButton.classList.toggle('hide');
+	optionsButton.classList.toggle('hide');
+	submitWordButton.classList.toggle('hide');
+	quitButton.classList.toggle('hide');
 	diceRoll();
 	updateTable();
 };
 
 var endGame = function () {
 	console.log('quit game');
-	startButton.classList.remove('hide');
-	optionsButton.classList.remove('hide');
-	quitButton.classList.add('hide');
+	startButton.classList.toggle('hide');
+	optionsButton.classList.toggle('hide');
+	submitWordButton.classList.toggle('hide');
+	quitButton.classList.toggle('hide');
 	showSolution();
-	makeTable();
 };
 
 var showOptions = function () {

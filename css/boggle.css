@@ -1,13 +1,36 @@
 body {
     text-align: center;
+    zoom: 2;
 }
-section {
+
+table {
+    width: 100%;
+}
+
+button {
+    padding: 0;
+    margin: 0;
+}
+
+#game-container {
     font-size: 30px;
-    width: 8.8em;
+    width: 350px;
     display: inline-block;
     box-sizing: border-box;
-    vertical-align: top;
     position: relative;
+}
+
+section {
+    box-sizing: border-box;
+    vertical-align: top;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    scroll: auto;
+    background: #FFF;
 }
 
 .letter:enabled {
@@ -21,24 +44,23 @@ section {
 
 #game-board {
     font-size: 30px;
-    width: 8.8em;
     display: inline-block;
     box-sizing: border-box;
 }
 
-#output {
+.pretty-button {
     padding: 0 .2em 0 .3em;
     /*padding-left: .5em;
     letter-spacing: .5em;*/
     letter-spacing: .1em;
 }
 
-#output,
+.pretty-button,
 .letter{
     display: inline-block;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 30px;
-    line-height: 1.5em;
+    line-height: 45px;
     opacity: 1;
     background: linear-gradient(to bottom right, #AAA, rgba(255,255,255,0));
     position: relative;
@@ -54,10 +76,10 @@ section {
 
 .letter {
     margin: 0;
-    width: 1.75em;
+    width: 60px;
 }
 
-#output,
+.pretty-button,
 .active {
     background: linear-gradient(to bottom right, gold, rgba(255,255,255,0));
 }
