@@ -1,0 +1,50 @@
+#output-container {
+    font-size: 30px;
+    width: 8.8em;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#game-board {
+    font-size: 30px;
+    width: 8.8em;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+#output {
+    padding: 0 .2em 0 .3em;
+    /*padding-left: .5em;
+    letter-spacing: .5em;*/
+    letter-spacing: .1em;
+}
+
+#output,
+.letter{
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 30px;
+    line-height: 1.5em;
+    opacity: 1;
+    background: linear-gradient(to bottom right, #AAA, rgba(255,255,255,0));
+    position: relative;
+    text-align: center;
+    text-decoration: none solid rgb(0, 0, 0);
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-line: none;
+    text-decoration-style: solid;
+    border-radius: .2em;
+    border: solid 2px #666;
+    box-sizing: border-box;
+}
+
+.letter {
+    width: 1.75em;
+}
+
+#output,
+.active {
+    background: linear-gradient(to bottom right, gold, rgba(255,255,255,0));
+}
