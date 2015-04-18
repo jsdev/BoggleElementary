@@ -1,5 +1,41 @@
 var myWordList =[];
-var magicNumber = 5;
+var solutions;
+var dimension = 5;
+var dimensionSquared = dimension * dimension;
+var board = new Array(dimensionSquared);
+var barWidth = 368;
+var totalTime = 10*1000;
+var timeRemaining = 0;
+var updateFrequency = 50;
+var timervar = null;
+var solutionColumnsNumber = 4;
+
+var dice = new Array(
+	"yqyswf",
+	"sztllp",
+	"xolrql",
+	"hcthjt",
+	"jkhhwf",
+	"ioeoau",
+	"qbrlpr",
+	"ggnetn",
+	"aaeouo",
+	"eiaeao",
+	"scywsj",
+	"ioeuee",
+	"aioeea",
+	"cmhkzn",
+	"hgbmgn",
+	"ouoaei",
+	"sysyfd",
+	"mlgmcp",
+	"uieeoo",
+	"dbxvdy",
+	"fnrddw",
+	"oaaeeu",
+	"vmrgzr",
+	"dkxmpk",
+	"bvtnts");
 
 var output = document.getElementById('output');
 var gameBoard = document.getElementById('game-board');
@@ -14,9 +50,11 @@ var indexTiles = function () {
 };
 indexTiles();
 
-// indexTiles as an IIFE
-(function(){ /* code */ }());
-
+var setBoardDimensions = function (){
+	dimension = parseInt(this.value);
+	dimensionSquared = dimension * dimension;
+	board = new Array(dimensionSquared);
+};
 
 var clearActiveTiles = function() {
 	for (var i = 0; i < tiles.length; i++) {
@@ -32,7 +70,7 @@ var disableTiles = function() {
 }
 
 var validateTile = function (index, direction) {
-	if (index < 0 || index >= magicNumber * magicNumber || tiles[index].classList.contains('active')) return;
+	if (index < 0 || index >= dimensionSquared || tiles[index].classList.contains('active')) return;
 	if (direction === 'left' && (index+1) % 5 === 0) return;
 	if (direction === 'right' && index % 5 === 0) return;
 	tiles[index].disabled = false;
@@ -40,8 +78,8 @@ var validateTile = function (index, direction) {
 
 var enableSurroundingTiles = function (tile) {
 	var index = tile.attributes.index;
-	var up = index - magicNumber;
-	var down = index + magicNumber;
+	var up = index - dimension;
+	var down = index + dimension;
 	validateTile(up, 'up');
 	validateTile(down, 'down');
 
