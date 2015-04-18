@@ -1,10 +1,18 @@
-#output-container {
+body {
+    text-align: center;
+}
+section {
     font-size: 30px;
     width: 8.8em;
     display: inline-block;
     box-sizing: border-box;
-    text-align: center;
 }
+
+
+#output-container {
+    height: 49px;
+}
+
 
 #game-board {
     font-size: 30px;
@@ -41,6 +49,7 @@
 }
 
 .letter {
+    margin: 0;
     width: 1.75em;
 }
 
