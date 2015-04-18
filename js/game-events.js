@@ -39,7 +39,7 @@ var dice = new Array(
 
 var output = document.getElementById('output');
 var gameBoard = document.getElementById('game-board');
-var tiles = gameBoard.querySelectorAll('button');
+var tiles;
 
 var clearAll = document.getElementById('clear-all');
 
@@ -48,12 +48,73 @@ var indexTiles = function () {
 		tiles[i].attributes.index = i;
 	}
 };
-indexTiles();
 
 var setBoardDimensions = function (){
 	dimension = parseInt(this.value);
 	dimensionSquared = dimension * dimension;
 	board = new Array(dimensionSquared);
+};
+
+var makeTable = function () {
+	var s = '';
+	for(var i = 0; i < dimension; i++) {
+		for(var j = 0; j < dimension; j++) {
+			s += '<button class="letter" id="'+i+'_'+j+'">?</button>';
+		}
+	}
+	gameBoard.innerHTML = s;
+	tiles = gameBoard.querySelectorAll('button');
+};
+
+var updateTable = function () {
+	for(var i=0; i<dimension; i++) {
+		for(var j=0; j<dimension; j++) {
+			var c = board[i+j*dimension].toUpperCase();
+			if(c=='Q') c = 'Qu';
+			document.getElementById(i+'_'+j).innerHTML = c;
+		}
+	}
+	indexTiles();
+};
+
+var diceRoll5 = function () {
+	var remaining = new Array();
+	for(var i=0; i < dimensionSquared; i++) {
+		remaining.push(i);
+	}
+	for(var i= 0, j, k; i < dimensionSquared; i++)
+	{
+		j = Math.floor(Math.random() * remaining.length);
+		k = remaining.splice(j, 1);
+		var die = dice[k];
+		j = Math.floor(Math.random() * 6);
+		var c = die.charAt(j);
+		board[i] = c;
+	}
+};
+
+var diceRoll = function () {
+	var i, j, k;
+	if(dimension === 5) {
+		diceRoll5();
+		return;
+	}
+	var remaining = new Array();
+	for(var i=0, j, k; i < dimensionSquared; i++)
+	{
+		j = Math.floor(Math.random()*dice.length);
+		var die = dice[j];
+		j = Math.floor(Math.random()*6);
+		var c = die.charAt(j);
+		board[i] = c;
+	}
+};
+
+
+var newGame = function () {
+	diceRoll();
+	makeTable();
+	updateTable();
 };
 
 var clearActiveTiles = function() {
@@ -119,7 +180,11 @@ var clicker = function(e) {
 };
 
 
+makeTable();
+
+
+document.getElementById('dimensions').addEventListener('change', setBoardDimensions);
+document.getElementById('start').addEventListener('click', newGame);
 
 gameBoard.addEventListener('click', clicker);
-
 clearAll.addEventListener('click', submitWord);

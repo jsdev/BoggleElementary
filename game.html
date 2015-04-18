@@ -18,10 +18,32 @@
     </div>
 </div>
 <hr />
-<div id='game-board'>
-    <button class="letter">A</button><button class="letter">B</button><button class="letter">C</button><button class="letter">D</button><button class="letter">E</button><button class="letter">A</button><button class="letter">B</button><button class="letter">C</button><button class="letter">D</button><button class="letter">E</button><button class="letter">A</button><button class="letter">B</button><button class="letter">C</button><button class="letter">D</button><button class="letter">E</button><button class="letter">A</button><button class="letter">B</button><button class="letter">C</button><button class="letter">D</button><button class="letter">E</button><button class="letter">A</button><button class="letter">B</button><button class="letter">C</button><button class="letter">D</button><button class="letter">E</button>
-</div>
-<button id='clear-all'>Submit</button>
+<div id='game-board'></div>
+    <button id="start">New Game</button>
+    <button id='clear-all'>Submit</button>
+</section>
+<section>
+    <label for="totalTime">Timer:</label>
+    <select name="totalTime" id="totalTime">
+        <option value="30">30 seconds</option>
+        <option value="60" selected>1 minute</option>
+        <option value="90">90 seconds</option>
+        <option value="120">Two minutes</option>
+        <option value="180">Three minutes</option>
+        <option value="240">Four minutes</option>
+        <option value="300">Five minutes</option>
+    </select>
+    <label for="dimensions">Size:</label>
+    <select name="dimensions" id="dimensions">
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5" selected>5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
 </section>
 <script src="./js/dictionary.js"></script>
 <script src="./js/seedrandom.js"></script>
