@@ -3,6 +3,12 @@
 <head>
     <title>Boggle Elementary</title>
     <link rel="stylesheet" href="./css/boggle.css" />
+    <!--
+    #note this is in HEAD to not have a CSS flash... on any browser/device...
+    optionally use the CDN
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+    //-->
+    <script src="./js/prefixfree.min.js"></script>
 </head>
 <body>
 <section>
@@ -17,11 +23,7 @@
 </div>
 <button id='clear-all'>Submit</button>
 </section>
-<!-- optionally use the CDN
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-//-->
-<script src="./js/prefixfree.min.js"></script>
+<script src="./js/dictionary.js"></script>
 <script src="./js/game-events.js"></script>
-
 </body>
 </html>
