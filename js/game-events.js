@@ -42,6 +42,8 @@ var notValid = document.getElementById('not-valid');
 var showAnswers = document.getElementById('score-container');
 
 var startButton = document.getElementById('start');
+var hsButton = document.getElementById('hs');
+
 var optionsButton = document.getElementById('options');
 var quitButton = document.getElementById('quit');
 var solution = document.getElementById('solution');
@@ -354,15 +356,19 @@ var boggle = {
 		showAnswers.disabled = true;
 		solution.parentNode.classList.remove('hide');
 	},
+	toggleButtons: function () {
+		startButton.classList.toggle('hide');
+		hsButton.classList.toggle('hide');
+		optionsButton.classList.toggle('hide');
+		submitWordButton.classList.toggle('hide');
+		quitButton.classList.toggle('hide');
+	},
 	newGame: function () {
 		var tt = document.getElementById('totalTime');
 
 		boggle.resetScore();
 		console.log('started new game w/ toggle');
-		startButton.classList.toggle('hide');
-		optionsButton.classList.toggle('hide');
-		submitWordButton.classList.toggle('hide');
-		quitButton.classList.toggle('hide');
+		boggle.toggleButtons();
 		diceRoll();
 		updateTable();
 		boggle.solve();
@@ -375,20 +381,16 @@ var boggle = {
 	},
 	endGame: function () {
 		console.log('quit game');
-		startButton.classList.toggle('hide');
-		optionsButton.classList.toggle('hide');
-		submitWordButton.classList.toggle('hide');
-		console.log(quitButton.classList.contains('hide'));
-		quitButton.classList.toggle('hide');
+		boggle.toggleButtons();
 		console.log(quitButton.classList.contains('hide'));
 		boggle.disableTiles();
 		boggle.calculateScore();
 		boggle.showSolution();
 		showAnswers.disabled = false;
-		boggle.checkHighScore();
+		boggle.checkHighScore(score.innerHTML);
 	},
 	getHighScore: function () {
-		this.highScore = localStorage.getItem('highscore') || null;
+		this.highScore = localStorage.getItem('highscore') || 0;
 		/*
 		$.ajax({
 			method: "GET",
@@ -401,15 +403,18 @@ var boggle = {
 
 	},
 	checkHighScore: function (hs) {
-		var currentHighScore = boggle.getHighScore();
-		if (!currentHighScore || hs > currentHighScore ) {
+		var currentHighScore = boggle.highScore;
+		console.log(hs);
+		console.log(currentHighScore);
+		if (hs > currentHighScore ) {
 			if (hs > 0) { alert('Congrats New High Score!') };
 			boggle.postHighScore();
 		}
 	},
 	postHighScore: function () {
-		var hs = score.innerHTML;
+		var hs = parseInt(score.innerHTML);
 		localStorage.setItem('highscore', hs);
+		boggle.highScore = hs;
 		/*
 		$.ajax({
 			method: "POST",
@@ -446,6 +451,7 @@ document.getElementById('dimensions').addEventListener('change', setBoardDimensi
 document.getElementById('users-choice').addEventListener('click', userChosen);
 document.getElementById('user-login').addEventListener('click', validateLogin);
 
+hsButton.addEventListener('click', function() { alert(boggle.highScore + 'PTS'); });
 showAnswers.addEventListener('click', boggle.showSolutionLayer);
 startButton.addEventListener('click', boggle.newGame);
 quitButton.addEventListener('click', boggle.endTime);
