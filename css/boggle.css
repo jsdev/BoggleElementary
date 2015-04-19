@@ -32,7 +32,7 @@ section {
     bottom: 0;
     right: 0;
     height: 100%;
-    scroll: auto;
+    overflow: auto;
     background: #FFF;
 }
 
@@ -42,8 +42,8 @@ section {
 
 #output-container {
     height: 49px;
+    position: relative;
 }
-
 
 #game-board {
     font-size: 30px;
@@ -60,7 +60,7 @@ section {
 
 #timeRemaining {
     position: absolute;
-    left: 0;
+    left: .25em;
     top: .25em;
 }
 
@@ -124,8 +124,14 @@ h2 {
     font-size:1em;
 }
 
-h2:first-letter {
-    font-size:1.3em;
+h2.main {
+    padding: 0;
+}
+
+h2 b {
+    margin: 0;
+    box-sizing: border-box;
+    font-size:1em;
 }
 
 .close-view {
@@ -173,7 +179,7 @@ span.pretty-button {
 
 #score-container {
     position: absolute;
-    right: 0;
+    right: .25em;
     top: .25em;
     font-size: .75em;
     line-height: 1.2em;
@@ -189,6 +195,8 @@ h3 { margin: 0}
 
 #options:first-letter,
 #start:first-letter,
-#quit:first-letter {
+#quit:first-letter,
+h2:first-letter,
+.first-letter {
     font-size: 1.2em;
 }

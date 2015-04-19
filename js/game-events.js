@@ -78,6 +78,7 @@ var makeTable = function () {
 	gameBoard.innerHTML = s;
 	tiles = gameBoard.querySelectorAll('button');
 	indexTiles();
+	boggle.getHighScore();
 };
 
 var updateTable = function () {
@@ -335,6 +336,39 @@ var boggle = {
 		boggle.calculateScore();
 		boggle.showSolution();
 		showAnswers.disabled = false;
+		boggle.checkHighScore();
+	},
+	getHighScore: function () {
+		this.highScore = localStorage.getItem('highscore') || null;
+		/*
+		var r = new XMLHttpRequest();
+		r.open("POST", "path/to/api", true);
+		r.onreadystatechange = function () {
+			if (r.readyState != 4 || r.status != 200) return;
+			alert("Success: " + r.responseText);
+			this.highScore = parseInt(r.responseText);
+		};
+	*/
+	},
+	checkHighScore: function (hs) {
+		var currentHighScore = boggle.getHighScore();
+		if (!currentHighScore || hs > currentHighScore ) {
+			if (hs > 0) { alert('Congrats New High Score!') };
+			boggle.postHighScore();
+		}
+	},
+	postHighScore: function () {
+		var hs = score.innerHTML;
+		localStorage.setItem('highscore', hs);
+		/*
+		var r = new XMLHttpRequest();
+		r.open("POST", "path/to/api", true);
+		r.onreadystatechange = function () {
+			if (r.readyState != 4 || r.status != 200) return;
+			alert("Success: " + r.responseText);
+		};
+		r.send("score="+ hs);
+		*/
 	},
 	endTime: function () {
 		timeRemaining = 0;
@@ -355,7 +389,6 @@ var boggle = {
 		document.getElementById('possible').innerHTML = s;
 	}
 };
-
 
 makeTable();
 
