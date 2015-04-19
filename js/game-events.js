@@ -1,5 +1,3 @@
-var myWordList =[];
-var solutions;
 var dimension = 5;
 var dimensionSquared = dimension * dimension;
 var board = new Array(dimensionSquared);
@@ -40,11 +38,14 @@ var dice = new Array(
 var output = document.getElementById('output');
 var gameBoard = document.getElementById('game-board');
 var configuration = document.getElementById('configuration');
+var notValid = document.getElementById('not-valid');
+var validAnswers = [];
 
 var startButton = document.getElementById('start');
 var optionsButton = document.getElementById('options');
 var quitButton = document.getElementById('quit');
 var solution = document.getElementById('solution');
+var score = document.getElementById('score');
 var minimumWordLength = document.getElementById('minimum-word-length');
 var maximumWordLength = document.getElementById('maximum-word-length');
 var tiles;
@@ -52,7 +53,8 @@ var tiles;
 var submitWordButton = document.getElementById('submit-word');
 
 //set height
-document.getElementById('game-container').style.height = window.innerHeight + "px";
+//document.getElementById('game-container').style.height = window.innerHeight + "px";
+document.getElementById('game-container').style.height = 1000 + "px";
 
 var indexTiles = function () {
 	for (var i=0; i < tiles.length; i++ ) {
@@ -131,12 +133,6 @@ var clearActiveTiles = function() {
 	}
 }
 
-var disableTiles = function() {
-	for (var i = 0; i < tiles.length; i++) {
-		tiles[i].disabled = true;
-	}
-}
-
 var validateTile = function (index, direction) {
 	if (index < 0 || index >= dimensionSquared || tiles[index].classList.contains('active')) return;
 	if (direction === 'left' && (index+1) % 5 === 0) return;
@@ -158,39 +154,6 @@ var enableSurroundingTiles = function (tile) {
 	validateTile(index + 1, 'right');
 	validateTile(up + 1, 'right');
 	validateTile(down + 1, 'right');
-
-};
-
-var submitWord = function () {
-	myWordList.push(output.innerHTML);
-	output.innerHTML = '';
-	clearActiveTiles();
-	console.log(myWordList);
-};
-
-var autoSubmitWord = function () {
-	/* simplifying game branding it 4 letter word */
-	if (output.innerHTML.length == 4 || (output.innerHTML.length && !gameBoard.querySelectorAll('button:not([disabled])').length)) {
-		submitWord();
-		return;
-	}
-};
-
-var clicker = function(e) {
-	var tile = e.target;
-	if (tile.tagName !== 'BUTTON' || tile.classList.contains('active')) {
-		return;
-	}
-	output.innerHTML = output.innerHTML + tile.innerHTML;
-	tile.classList.add('active');
-	disableTiles();
-	enableSurroundingTiles(tile);
-	autoSubmitWord();
-};
-
-var transformWord = function (word) {
-	var w = word.toUpperCase();
-	return w.replace(/Q/g, 'Qu');
 };
 
 var safeBoard = function (i, j) {
@@ -228,61 +191,9 @@ var findWord = function (word) {
 	return 0;
 };
 
-var solve = function () {
-	solutions = new Array();
-	for(var i=0; i<words.length; i++) {
-		if(words[i].length >= parseInt(minimumWordLength.value)) {
-			if(findWord(words[i])) {
-				solutions.push(words[i]);
-			}
-		}
-	}
-	//makeTable();
-};
-
-var showSolution = function () {
-	solve();
-	var col = 0;
-	var s = '';
-	var max = maximumWordLength ? maximumWordLength.value : dimensionSquared;
-	for(var wl= max; wl>=3; wl--) {
-		for(var i=0; i<solutions.length; i++) {
-			if(solutions[i].length==wl) {
-				var w = transformWord(solutions[i]);
-				if (col===0) s += '<tr>'
-				col = (col+1)%solutionColumnsNumber;
-				s += '<td><a class="get-definition" target="_blank" href="http://www.lexic.us/definition-of/' + w + '">' + w + '</a></td>';
-				if (col=== 0)  s += '</tr>\n';
-			}
-		}
-	}
-	if (col>0)  s += '</tr>';
-	solution.innerHTML = s;
-	solution.parentNode.classList.remove('hide');
-};
-
 var closeSection = function (e) {
 	if (!e.target.classList.contains('close-view')) return;
 	e.target.parentNode.classList.add('hide');
-}
-
-var newGame = function () {
-	console.log('started new game w/ toggle');
-	startButton.classList.toggle('hide');
-	optionsButton.classList.toggle('hide');
-	submitWordButton.classList.toggle('hide');
-	quitButton.classList.toggle('hide');
-	diceRoll();
-	updateTable();
-};
-
-var endGame = function () {
-	console.log('quit game');
-	startButton.classList.toggle('hide');
-	optionsButton.classList.toggle('hide');
-	submitWordButton.classList.toggle('hide');
-	quitButton.classList.toggle('hide');
-	showSolution();
 };
 
 var showOptions = function () {
@@ -290,14 +201,134 @@ var showOptions = function () {
 	configuration.classList.remove('hide');
 };
 
+var boggle = {
+	invalid: [],
+	myWordList: [],
+	disableTiles: function() {
+		for (var i = 0; i < tiles.length; i++) {
+			tiles[i].disabled = true;
+		}
+	},
+	autoSubmitWord: function () {
+		/* simplifying game branding it 4 letter word */
+		if (output.innerHTML.length == 4 || (output.innerHTML.length && !gameBoard.querySelectorAll('button:not([disabled])').length)) {
+			boggle.submitWord();
+			return;
+		}
+	},
+	checkValidity: function(word) {
+		var wordIsValid,
+			wordIsDuplicate = boggle.myWordList.indexOf(word) >= 0;
+
+		if (wordIsDuplicate) return;
+
+		wordIsValid = boggle.solutions.indexOf(word.toLowerCase()) >= 0;
+		if (wordIsValid) {
+			boggle.myWordList.push(word);
+			boggle.updateScore();
+			return;
+		}
+
+		boggle.invalid.push(word);
+	},
+	submitWord: function () {
+		boggle.checkValidity(output.innerHTML);
+		output.innerHTML = '';
+		clearActiveTiles();
+	},
+	clicker: function(e) {
+		var tile = e.target;
+		if (tile.tagName !== 'BUTTON' || tile.classList.contains('active')) {
+			return;
+		}
+		output.innerHTML = output.innerHTML + tile.innerHTML;
+		tile.classList.add('active');
+		boggle.disableTiles();
+		enableSurroundingTiles(tile);
+		boggle.autoSubmitWord();
+	},
+	solve: function () {
+		boggle.solutions = new Array();
+		for(var i=0; i<words.length; i++) {
+			if(words[i].length >= parseInt(minimumWordLength.value)) {
+				if(findWord(words[i])) {
+					boggle.solutions.push(words[i]);
+				}
+			}
+		}
+	//makeTable();
+	},
+	showSolution: function () {
+		var max = maximumWordLength ? maximumWordLength.value : dimensionSquared;
+		var s = '';
+		var i = 0;
+		var word;
+		for (i = 0; i < boggle.invalid.length; i++) {
+			s += '<span class="bad">'+boggle.invalid[i]+'</span>';
+		}
+		notValid.innerHTML = s;
+
+		s = '';
+		for(var wl = max; wl >= 3; wl--) {
+			for(i = 0; i < boggle.solutions.length; i++) {
+				word = boggle.solutions[i];
+				if(word.length==wl) {
+					s += '<a class="get-definition" target="_blank" href="http://www.lexic.us/definition-of/' + word + '">' + word.toUpperCase() + '</a>';
+				}
+			}
+		}
+		for(i = 0; i < boggle.myWordList.length; i++) {
+			word = boggle.myWordList[i].toUpperCase();
+			s = s.replace('>'+ word +'<','><span class="pretty-button">'+ word +'</span><');
+		}
+		solution.innerHTML = s;
+		solution.parentNode.classList.remove('hide');
+	},
+	newGame: function () {
+		boggle.resetScore();
+		console.log('started new game w/ toggle');
+		startButton.classList.toggle('hide');
+		optionsButton.classList.toggle('hide');
+		submitWordButton.classList.toggle('hide');
+		quitButton.classList.toggle('hide');
+		diceRoll();
+		updateTable();
+		boggle.solve();
+	},
+	endGame: function () {
+		console.log('quit game');
+		startButton.classList.toggle('hide');
+		optionsButton.classList.toggle('hide');
+		submitWordButton.classList.toggle('hide');
+		quitButton.classList.toggle('hide');
+		boggle.disableTiles();
+		boggle.showSolution();
+	},
+	resetScore: function () {
+		boggle.invalid = [];
+		boggle.myWordList = [];
+		score.innerHTML = '0';
+	},
+	updateScore: function () {
+		score.innerHTML = parseInt(score.innerHTML) + boggle.myWordList.length;
+	},
+	calculateScore: function () {
+		for (var i = 1, s = 0, len = boggle.myWordList.length; i < len; i++){
+			s += i;
+		}
+		score.innerHTML = s;
+	}
+};
+
+
 makeTable();
 
 document.getElementById('dimensions').addEventListener('change', setBoardDimensions);
-startButton.addEventListener('click', newGame);
-quitButton.addEventListener('click', endGame);
+startButton.addEventListener('click', boggle.newGame);
+quitButton.addEventListener('click', boggle.endGame);
 optionsButton.addEventListener('click', showOptions);
 
-gameBoard.addEventListener('click', clicker);
-submitWordButton.addEventListener('click', submitWord);
+gameBoard.addEventListener('click', boggle.clicker);
+submitWordButton.addEventListener('click', boggle.submitWord);
 
 document.body.addEventListener('click', closeSection);

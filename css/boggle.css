@@ -1,7 +1,10 @@
 body {
     text-align: center;
     zoom: 2;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
+
+.solution
 
 table {
     width: 100%;
@@ -58,7 +61,6 @@ section {
 .pretty-button,
 .letter{
     display: inline-block;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 30px;
     line-height: 45px;
     opacity: 1;
@@ -117,13 +119,37 @@ h2 {
 
 h1 { display: none;}
 
-.get-definition {
+#not-valid,
+#solution {
+    text-align: left;
+}
+
+.small {
+    font-size: .5em;
+}
+
+.get-definition,
+.bad {
     color: black;
     font-size:.75em;
     text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    width: 25%;
+    line-height: 1.2em;
 }
 
-.solution {
-    text-align: right;
-    width: 100%;
+.bad {
+    text-decoration: line-through;
+}
+
+span.pretty-button {
+    font-size: 1em;
+    line-height: inherit;
+}
+
+#score-container {
+    position: absolute;
+    right: 0;
+    top: .25em;
 }
