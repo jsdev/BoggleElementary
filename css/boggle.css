@@ -69,11 +69,11 @@ section {
 }
 
 #bar_remaining {
-    background-color: green;
+    background-color: limegreen;
 }
 
 #bar_elapsed {
-    background-color: red;
+    background-color: rgba(0,0,0,0.1);
 }
 
 .pretty-button,
@@ -121,6 +121,11 @@ h2 {
     margin: 0;
     padding-right: .5em;
     box-sizing: border-box;
+    font-size:1em;
+}
+
+h2:first-letter {
+    font-size:1.3em;
 }
 
 .close-view {
@@ -129,7 +134,7 @@ h2 {
     padding: .2em .5em;
     border: solid 2px black;
     position: absolute;
-    top: .25em;
+    top: .1em;
     right: .25em;
     font-size: .75em;
     background: transparent;
@@ -175,3 +180,15 @@ span.pretty-button {
 }
 
 h3 { margin: 0}
+
+#options,
+#start,
+#quit {
+    font-size: .8em;
+}
+
+#options:first-letter,
+#start:first-letter,
+#quit:first-letter {
+    font-size: 1.2em;
+}

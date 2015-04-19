@@ -328,11 +328,16 @@ var boggle = {
 		startButton.classList.toggle('hide');
 		optionsButton.classList.toggle('hide');
 		submitWordButton.classList.toggle('hide');
+		console.log(quitButton.classList.contains('hide'));
 		quitButton.classList.toggle('hide');
+		console.log(quitButton.classList.contains('hide'));
 		boggle.disableTiles();
 		boggle.calculateScore();
 		boggle.showSolution();
 		showAnswers.disabled = false;
+	},
+	endTime: function () {
+		timeRemaining = 0;
 	},
 	resetScore: function () {
 		boggle.invalid = [];
@@ -357,7 +362,7 @@ makeTable();
 document.getElementById('dimensions').addEventListener('change', setBoardDimensions);
 showAnswers.addEventListener('click', boggle.showSolutionLayer);
 startButton.addEventListener('click', boggle.newGame);
-quitButton.addEventListener('click', boggle.endGame);
+quitButton.addEventListener('click', boggle.endTime);
 optionsButton.addEventListener('click', showOptions);
 
 gameBoard.addEventListener('click', boggle.clicker);

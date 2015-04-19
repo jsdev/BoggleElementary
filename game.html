@@ -27,12 +27,13 @@
     </table>
     <div id='game-board'></div>
     <hr />
-    <button id="start" class="pretty-button">Start</button>
-    <button id='options' class="pretty-button">Options</button>
+    <button id="start" class="pretty-button">PLAY</button>
+    <button id='options' class="pretty-button">OPTIONS</button>
     <button id='submit-word' style="display: none;" class="hide pretty-button">Submit Word</button>
-    <button id="quit" class="hide pretty-button">End Game</button>
+    <button id="quit" class="hide pretty-button">STOP</button>
 </section><section id="configuration" class="hide">
-    <h2>Options</h2><button class="close-view" title="Exit Options">X</button>
+    <h2>OPTIONS</h2><button class="close-view" title="Exit Options">X</button>
+    <hr/>
     <label for="dimensions">Size:</label>
     <select name="dimensions" id="dimensions">
         <option value="3">3</option>
@@ -73,7 +74,8 @@
         <option value="4" selected>4</option>
     </select>
 </section><section class="solutions hide">
-    <h2>Answers</h2><button class="close-view" title="Exit Answers">X</button>
+    <h2>ANSWERS</h2><button class="close-view" title="Exit Answers">X</button>
+    <hr/>
     <h3><span id="scored"></span><span class="small">PTS</span> <span class="small">OUT OF</span> <span id="possible"></span><span class="small">PTS</span></h3>
     <hr />
     <div id="solution"></div>
