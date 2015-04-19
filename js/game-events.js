@@ -390,7 +390,7 @@ var boggle = {
 		boggle.checkHighScore(score.innerHTML);
 	},
 	getHighScore: function () {
-		this.highScore = localStorage.getItem('highscore') || 0;
+		boggle.highScore = localStorage.getItem('highscore') || 0;
 		/*
 		$.ajax({
 			method: "GET",
@@ -402,28 +402,28 @@ var boggle = {
 		*/
 
 	},
-	checkHighScore: function (hs) {
-		var currentHighScore = boggle.highScore;
-		console.log(hs);
-		console.log(currentHighScore);
-		if (hs > currentHighScore ) {
-			if (hs > 0) { alert('Congrats New High Score!') };
-			boggle.postHighScore();
-		}
-	},
 	postHighScore: function () {
 		var hs = parseInt(score.innerHTML);
 		localStorage.setItem('highscore', hs);
 		boggle.highScore = hs;
 		/*
-		$.ajax({
-			method: "POST",
-			url: "http://sprinter.phonedeveloper.com/set_score",
-			data: {score: hs}
-		}).done(function( msg ) {
-			boggle.highScore = parseInt(msg);
-		});
-		*/
+		 $.ajax({
+		 method: "POST",
+		 url: "http://sprinter.phonedeveloper.com/set_score",
+		 data: {score: hs}
+		 }).done(function( msg ) {
+		 boggle.highScore = parseInt(msg);
+		 });
+		 */
+	},
+	checkHighScore: function (hs) {
+		var currentHighScore = boggle.highScore;
+		console.log(hs);
+		console.log(currentHighScore);
+		if (parseInt(hs) > parseInt(currentHighScore) ) {
+			boggle.postHighScore();
+			alert(boggle.highScore + '\nis a new High Score!');
+		}
 	},
 	endTime: function () {
 		timeRemaining = 0;
