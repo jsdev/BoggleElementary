@@ -216,7 +216,27 @@ var tick = function () {
 	w = Math.floor(100 * timeRemaining / totalTime);
 	document.getElementById('bar_remaining').width = w + '%';
 	document.getElementById('bar_elapsed').width = (100 - w) + '%';
-}
+};
+
+var userChosen = function (e) {
+	if (e.target.tagName == "BUTTON") {
+		document.getElementById('users-choice').classList.toggle('hide');
+		document.getElementById('user-login').classList.toggle('hide');
+		document.getElementById('password').focus();
+	}
+};
+
+var validateLogin = function (e) {
+	if (e.target.tagName == "BUTTON" && document.getElementById('password').value.length && document.getElementById('password').value !== "badpass") {
+		console.log('successfully validated');
+		document.getElementById('user-login').classList.toggle('hide');
+		document.getElementById('game').classList.toggle('hide');
+	}
+	document.getElementById('password').value = "";
+	document.getElementById('password').focus();
+	console.log('failed to validate');
+};
+
 
 var boggle = {
 	invalid: [],
@@ -393,6 +413,9 @@ var boggle = {
 makeTable();
 
 document.getElementById('dimensions').addEventListener('change', setBoardDimensions);
+document.getElementById('users-choice').addEventListener('click', userChosen);
+document.getElementById('user-login').addEventListener('click', validateLogin);
+
 showAnswers.addEventListener('click', boggle.showSolutionLayer);
 startButton.addEventListener('click', boggle.newGame);
 quitButton.addEventListener('click', boggle.endTime);

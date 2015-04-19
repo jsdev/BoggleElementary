@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    zoom: 2;
+    zoom: 2.5;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
@@ -193,10 +193,19 @@ h3 { margin: 0}
     font-size: .8em;
 }
 
+#password {
+    font-size: 1em;
+    line-height: 1.5em;
+    border: 0 none;
+    padding: 0;
+    margin: 0;
+}
+
 #options:first-letter,
 #start:first-letter,
 #quit:first-letter,
 h2:first-letter,
+.user:first-letter
 .first-letter {
     font-size: 1.2em;
 }

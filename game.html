@@ -13,7 +13,22 @@
 <body>
 <h1>Boggle Elementary</h1>
 <div id="game-container">
-<section>
+    <section id="users-choice">
+        <h2>FOUR <span class="first-letter">L</span>ETTER <span class="first-letter">W</span>ORD</b></h2>
+        <hr/>
+        <div class="users">
+            <button class="user pretty-button">ANTONIO</button>
+            <hr />
+            <button class="user pretty-button">ELENA</button>
+        </div>
+    </section><section id="user-login" class="hide">
+    <h2>FOUR <span class="first-letter">L</span>ETTER <span class="first-letter">W</span>ORD</b></h2>
+    <label for="password" style="display:none"><span class="first-letter">P</span>ASSWORD:</label>
+    <hr />
+    <input type="password" placeholder="PASSWORD" id="password" name="password" />
+    <hr />
+    <button id="login" class="pretty-button"><span class="first-letter">L</span>OGIN</button>
+</section><section id="game" class="hide">
     <h2>FOUR <span class="first-letter">L</span>ETTER <span class="first-letter">W</span>ORD</b></h2>
     <div id="output-container">
         <div id="output" class="pretty-button"></div>
@@ -86,6 +101,8 @@
     <div id="not-valid"></div>
 </section>
 </div>
+
+
 
 <script src="./js/dictionary.js"></script>
 <script src="./js/seedrandom.js"></script>
