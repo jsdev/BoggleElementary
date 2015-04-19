@@ -39,7 +39,7 @@ var output = document.getElementById('output');
 var gameBoard = document.getElementById('game-board');
 var configuration = document.getElementById('configuration');
 var notValid = document.getElementById('not-valid');
-var validAnswers = [];
+var showAnswers = document.getElementById('score-container');
 
 var startButton = document.getElementById('start');
 var optionsButton = document.getElementById('options');
@@ -211,7 +211,7 @@ var boggle = {
 	},
 	autoSubmitWord: function () {
 		/* simplifying game branding it 4 letter word */
-		if (output.innerHTML.length == 4 || (output.innerHTML.length && !gameBoard.querySelectorAll('button:not([disabled])').length)) {
+		if (output.innerHTML.length >= 4 || (output.innerHTML.length && !gameBoard.querySelectorAll('button:not([disabled])').length)) {
 			boggle.submitWord();
 			return;
 		}
@@ -282,6 +282,9 @@ var boggle = {
 			s = s.replace('>'+ word +'<','><span class="pretty-button">'+ word +'</span><');
 		}
 		solution.innerHTML = s;
+		boggle.showSolutionLayer();
+	},
+	showSolutionLayer: function () {
 		solution.parentNode.classList.remove('hide');
 	},
 	newGame: function () {
@@ -294,6 +297,7 @@ var boggle = {
 		diceRoll();
 		updateTable();
 		boggle.solve();
+		showAnswers.disabled = true;
 	},
 	endGame: function () {
 		console.log('quit game');
@@ -302,7 +306,9 @@ var boggle = {
 		submitWordButton.classList.toggle('hide');
 		quitButton.classList.toggle('hide');
 		boggle.disableTiles();
+		boggle.calculateScore();
 		boggle.showSolution();
+		showAnswers.disabled = false;
 	},
 	resetScore: function () {
 		boggle.invalid = [];
@@ -313,10 +319,11 @@ var boggle = {
 		score.innerHTML = parseInt(score.innerHTML) + boggle.myWordList.length;
 	},
 	calculateScore: function () {
-		for (var i = 1, s = 0, len = boggle.myWordList.length; i < len; i++){
+		for (var i = 1, s = 0, len = boggle.solutions.length; i < len; i++){
 			s += i;
 		}
-		score.innerHTML = s;
+		document.getElementById('scored').innerHTML = score.innerHTML;
+		document.getElementById('possible').innerHTML = s;
 	}
 };
 
@@ -324,6 +331,7 @@ var boggle = {
 makeTable();
 
 document.getElementById('dimensions').addEventListener('change', setBoardDimensions);
+showAnswers.addEventListener('click', boggle.showSolutionLayer);
 startButton.addEventListener('click', boggle.newGame);
 quitButton.addEventListener('click', boggle.endGame);
 optionsButton.addEventListener('click', showOptions);

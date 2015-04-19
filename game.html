@@ -16,7 +16,7 @@
 <section>
     <div id="output-container">
         <div id="output" class="pretty-button"></div>
-        <div id="score-container"><span id="score">0</span><span class="small">PTS</span></div>
+        <button id="score-container" class="pretty-button"><span id="score">0</span><span class="small">PTS</span></button>
     </div>
     <hr />
     <div id='game-board'></div>
@@ -68,7 +68,11 @@
     </select>
 </section><section class="solutions hide">
     <h2>Answers</h2><button class="close-view" title="Exit Answers">X</button>
+    <h3><span id="scored"></span><span class="small">PTS</span> <span class="small">OUT OF</span> <span id="possible"></span><span class="small">PTS</span></h3>
+    <hr />
     <div id="solution"></div>
+    <hr />
+    <h3>FAT FINGERED</h3>
     <hr />
     <div id="not-valid"></div>
 </section>
