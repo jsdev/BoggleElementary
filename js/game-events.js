@@ -201,6 +201,22 @@ var showOptions = function () {
 	configuration.classList.remove('hide');
 };
 
+var tick = function () {
+	var t, w;
+	timeRemaining = timeRemaining-updateFrequency;
+	if(timeRemaining <= 0) {
+		timeRemaining = 0;
+		boggle.endGame();
+	} else {
+		timervar = setTimeout('tick()', updateFrequency);
+	}
+	t = Math.ceil(timeRemaining/1000);
+	document.getElementById('timeRemaining').innerHTML = ':'+t;
+	w = Math.floor(100 * timeRemaining / totalTime);
+	document.getElementById('bar_remaining').width = w + '%';
+	document.getElementById('bar_elapsed').width = (100 - w) + '%';
+}
+
 var boggle = {
 	invalid: [],
 	myWordList: [],
@@ -285,9 +301,12 @@ var boggle = {
 		boggle.showSolutionLayer();
 	},
 	showSolutionLayer: function () {
+		showAnswers.disabled = true;
 		solution.parentNode.classList.remove('hide');
 	},
 	newGame: function () {
+		var tt = document.getElementById('totalTime');
+
 		boggle.resetScore();
 		console.log('started new game w/ toggle');
 		startButton.classList.toggle('hide');
@@ -298,6 +317,11 @@ var boggle = {
 		updateTable();
 		boggle.solve();
 		showAnswers.disabled = true;
+
+		if (tt) totalTime = parseInt(tt.value)*1000;
+		if( timeRemaining > 0) clearTimeout(timervar);
+		timeRemaining = totalTime;
+		timervar = setTimeout("tick()", updateFrequency);
 	},
 	endGame: function () {
 		console.log('quit game');

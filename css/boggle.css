@@ -58,6 +58,24 @@ section {
     letter-spacing: .1em;
 }
 
+#timeRemaining {
+    position: absolute;
+    left: 0;
+    top: .25em;
+}
+
+#timetable {
+    margin: .5em 0;
+}
+
+#bar_remaining {
+    background-color: green;
+}
+
+#bar_elapsed {
+    background-color: red;
+}
+
 .pretty-button,
 .letter{
     display: inline-block;
@@ -152,6 +170,8 @@ span.pretty-button {
     position: absolute;
     right: 0;
     top: .25em;
+    font-size: .75em;
+    line-height: 1.2em;
 }
 
 h3 { margin: 0}
