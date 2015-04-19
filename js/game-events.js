@@ -273,7 +273,7 @@ var boggle = {
 			for(i = 0; i < boggle.solutions.length; i++) {
 				word = boggle.solutions[i];
 				if(word.length==wl) {
-					s += '<a class="get-definition" target="_blank" href="http://www.lexic.us/definition-of/' + word + '">' + word.toUpperCase() + '</a>';
+					s += '<a class="get-definition" target="_blank" href="http://dictionary.reference.com/browse/' + word + '">' + word.toUpperCase() + '</a>';
 				}
 			}
 		}
