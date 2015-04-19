@@ -226,15 +226,44 @@ var userChosen = function (e) {
 	}
 };
 
+var loginFail = function () {
+	var input = document.getElementById('password');
+	input.value = "";
+	input.focus();
+	console.log('failed to validate');
+}
+
 var validateLogin = function (e) {
-	if (e.target.tagName == "BUTTON" && document.getElementById('password').value.length && document.getElementById('password').value !== "badpass") {
+	var input = document.getElementById('password');
+
+	if (e.target.tagName == "BUTTON" && input.value.length && input.value !== "badpass") {
 		console.log('successfully validated');
 		document.getElementById('user-login').classList.toggle('hide');
 		document.getElementById('game').classList.toggle('hide');
+	} else {
+		loginFail ();
 	}
-	document.getElementById('password').value = "";
-	document.getElementById('password').focus();
-	console.log('failed to validate');
+/*
+	var input = document.getElementById('password');
+
+	if (e.target.tagName == "BUTTON" && input.value.length) {
+		$.ajax({
+			method: "POST",
+			url: "http://sprinter.phonedeveloper.com/game_login",
+			data: {user: 'sean', password: input.value}
+		}).done(function( bool ) {
+			if (!!bool) {
+				console.log('successfully validated');
+				document.getElementById('user-login').classList.toggle('hide');
+				document.getElementById('game').classList.toggle('hide');
+			} else {
+				loginFail();
+			}
+		});
+	} else {
+		loginFail();
+	}
+*/
 };
 
 
@@ -361,14 +390,15 @@ var boggle = {
 	getHighScore: function () {
 		this.highScore = localStorage.getItem('highscore') || null;
 		/*
-		var r = new XMLHttpRequest();
-		r.open("POST", "path/to/api", true);
-		r.onreadystatechange = function () {
-			if (r.readyState != 4 || r.status != 200) return;
-			alert("Success: " + r.responseText);
-			this.highScore = parseInt(r.responseText);
-		};
-	*/
+		$.ajax({
+			method: "GET",
+			url: "http://sprinter.phonedeveloper.com/get_score",
+			cache: false
+		}).done(function( msg ) {
+			boggle.highScore = parseInt(msg);
+		});
+		*/
+
 	},
 	checkHighScore: function (hs) {
 		var currentHighScore = boggle.getHighScore();
@@ -381,13 +411,13 @@ var boggle = {
 		var hs = score.innerHTML;
 		localStorage.setItem('highscore', hs);
 		/*
-		var r = new XMLHttpRequest();
-		r.open("POST", "path/to/api", true);
-		r.onreadystatechange = function () {
-			if (r.readyState != 4 || r.status != 200) return;
-			alert("Success: " + r.responseText);
-		};
-		r.send("score="+ hs);
+		$.ajax({
+			method: "POST",
+			url: "http://sprinter.phonedeveloper.com/set_score",
+			data: {score: hs}
+		}).done(function( msg ) {
+			boggle.highScore = parseInt(msg);
+		});
 		*/
 	},
 	endTime: function () {
