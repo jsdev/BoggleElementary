@@ -205,7 +205,7 @@ h3 { margin: 0}
 #start:first-letter,
 #quit:first-letter,
 h2:first-letter,
-.user:first-letter
+.user:first-letter,
 .first-letter {
     font-size: 1.2em;
 }
